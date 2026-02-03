@@ -1,0 +1,57 @@
+# TodoCode System Design Module Configuration
+
+spring:
+  application:
+    name: todo-system-design
+
+  # Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/todocode?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: todocode
+    password: todocode123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # Redis Configuration
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+# Actuator Configuration for Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Logging Configuration
+logging:
+  level:
+    org.todocode: DEBUG
+    org.springframework.data: DEBUG
+    org.hibernate.SQL: DEBUG
